@@ -13,7 +13,7 @@ function App() {
     e.preventDefault();
     setLoading(true)
     try {
-      const response = await axios.get(`${apiUrl}?Key=${API_KEY}&q=${cityName}`);
+      const response = await axios.get(`${apiUrl}?Key=${API_KEY}&q=${cityName.toLowerCase()}`);
       console.log(response.data.current)
       setWeatherData({
         'Temperature': `${response.data.current.temp_c}°C`,
