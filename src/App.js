@@ -8,13 +8,17 @@ function App() {
   const [cityName, setCityName] = useState('');
   const [weatherData, setWeatherData] = useState({});
   const [loading, setLoading] = useState(false);
-  const apiUrl = 'https://api.weatherapi.com/v1/current.json'
+  const apiUrl = 'https://api.weatherapi.com/v1/current.json';
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true)
+    setLoading(true);
+
     try {
-      const response = await axios.get(`${apiUrl}?Key=${API_KEY}&q=${cityName.toLowerCase()}`);
-      console.log(response.data.current)
+      const response = await axios.get(`${apiUrl}?key=${API_KEY}&q=${cityName.toLowerCase()}`);
+
+      console.log(response.data.current);
+
       setWeatherData({
         'Temperature': `${response.data.current.temp_c}°C`,
         'Humidity': `${response.data.current.humidity}%`,
@@ -22,11 +26,13 @@ function App() {
         'Wind Speed': `${response.data.current.wind_kph} kph`,
       });
     } catch (err) {
-      console.error('Failed to fetch weather data')
+      console.error('Failed to fetch weather data');
       alert('Failed to fetch weather data');
     }
-    setLoading(false)
-  }
+
+    setLoading(false);
+  };
+
   return (
     <div className="App">
       <form className='form' onSubmit={handleSubmit}>
