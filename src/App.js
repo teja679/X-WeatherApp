@@ -2,22 +2,21 @@
 import { useState } from 'react';
 import './App.css';
 import axios from 'axios';
-export const API_KEY = 'c377d2f1207943fda19124951242510';
 
 function App() {
+  const API_KEY = 'c377d2f1207943fda19124951242510';
   const [cityName, setCityName] = useState('');
   const [weatherData, setWeatherData] = useState({});
   const [loading, setLoading] = useState(false);
-  const apiUrl = 'https://api.weatherapi.com/v1/current.json';
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
     try {
-      const response = await axios.get(`${apiUrl}?key=${API_KEY}&q=${cityName.toLowerCase()}`);
+      const response = await axios.get(`https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${cityName.toLowerCase()}`);
 
-      console.log(response.data.current);
+      // console.log(response.data.current);
 
       setWeatherData({
         'Temperature': `${response.data.current.temp_c}°C`,
