@@ -35,11 +35,11 @@ body {
   height: 500px;
 }
 
-.details-card>* {
+.weather-card>* {
   margin: 0;
 }
 
-.details-card {
+.weather-card {
   background-color: #fff;
   display: flex;
   flex-direction: column;
