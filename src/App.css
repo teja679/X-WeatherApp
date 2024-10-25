@@ -27,7 +27,7 @@ body {
 
 }
 
-.details-div {
+.weather-cards {
   display: flex;
   justify-content: center;
   align-items: center;

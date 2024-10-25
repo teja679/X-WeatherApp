@@ -31,25 +31,25 @@ function App() {
         <input type='text' value={cityName} onChange={e => setCityName(e.target.value)} placeholder='Enter city name' required />
         <button type='submit'>Search</button>
       </form>
-      <div className='details-div'>
-        {loading ? <div>Loading data...</div>
+      <div className='weather-cards'>
+        {loading ? <p>Loading data...</p>
           :
           <>
             {Object.keys(weatherData).length > 0 &&
               <>
-                <section className='details-card'>
+                <section className='weather-card'>
                   <h4>Temperature</h4>
                   <p>{weatherData.temp_c}°C</p>
                 </section>
-                <section className='details-card'>
+                <section className='weather-card'>
                   <h4>Humidity</h4>
                   <p>{weatherData.humidity}%</p>
                 </section>
-                <section className='details-card'>
+                <section className='weather-card'>
                   <h4>Condition</h4>
                   <p>{weatherData.condition?.text}</p>
                 </section>
-                <section className='details-card'>
+                <section className='weather-card'>
                   <h4>Wind Speed</h4>
                   <p>{weatherData.wind_kph} kph</p>
                 </section>
