@@ -12,18 +12,11 @@ function App() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-
+    setWeatherData({})
     try {
       const response = await axios.get(`https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${cityName.toLowerCase()}`);
-
-      // console.log(response.data.current);
-
-      setWeatherData({
-        'Temperature': `${response.data.current.temp_c}°C`,
-        'Humidity': `${response.data.current.humidity}%`,
-        'Condition': `${response.data.current.condition.text}`,
-        'Wind Speed': `${response.data.current.wind_kph} kph`,
-      });
+      console.log(response.data.current)
+      setWeatherData(response.data.current)
     } catch (err) {
       console.error('Failed to fetch weather data');
       alert('Failed to fetch weather data');
@@ -42,12 +35,26 @@ function App() {
         {loading ? <div>Loading data...</div>
           :
           <>
-            {weatherData && Object.keys(weatherData).map(key => {
-              return <section key={key} className='details-card'>
-                <h4>{key}</h4>
-                <p>{weatherData[key]}</p>
-              </section>
-            })}
+            {Object.keys(weatherData).length > 0 &&
+              <>
+                <section className='details-card'>
+                  <h4>Temperature</h4>
+                  <p>{weatherData.temp_c}°C</p>
+                </section>
+                <section className='details-card'>
+                  <h4>Humidity</h4>
+                  <p>{weatherData.humidity}%</p>
+                </section>
+                <section className='details-card'>
+                  <h4>Condition</h4>
+                  <p>{weatherData.condition?.text}</p>
+                </section>
+                <section className='details-card'>
+                  <h4>Wind Speed</h4>
+                  <p>{weatherData.wind_kph} kph</p>
+                </section>
+              </>
+            }
           </>
         }
       </div>
