@@ -5,66 +5,66 @@ import axios from 'axios';
 function App() {
   const API_KEY = 'c377d2f1207943fda19124951242510';
   const [cityName, setCityName] = useState('');
-  const [weatherData, setWeatherData] = useState(null);
+  const [weatherData, setWeatherData] = useState({});
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!cityName) return;
-
     setLoading(true);
-    setWeatherData(null);
+    setWeatherData({});
     setError('');
 
     try {
-      const { data } = await axios.get(
-        `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${cityName.toLowerCase()}`
-      );
-      setWeatherData(data.current);
-      // setCityName('');
+      const response = await axios.get(`https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${cityName.toLowerCase()}`);
+      setWeatherData(response.data.current);
+      setCityName(''); // Reset city name input after fetching data
     } catch (err) {
       setError('Failed to fetch weather data. Please try again.');
-    } finally {
-      setLoading(false);
     }
+
+    setLoading(false);
   };
 
   return (
     <div className="App">
-      <form className="form" onSubmit={handleSubmit}>
+      <form className='form' onSubmit={handleSubmit}>
         <input
-          type="text"
+          type='text'
           value={cityName}
-          onChange={(e) => setCityName(e.target.value)}
-          placeholder="Enter city name"
+          onChange={e => setCityName(e.target.value)}
+          placeholder='Enter city name'
           required
         />
-        <button type="submit" disabled={loading}>
-          {loading ? 'Searching...' : 'Search'}
-        </button>
+        <button type='submit'>Search</button>
       </form>
 
-      <div className="weather-cards">
-        {error && <p className="error">{error}</p>}
-        {weatherData && !loading && !error && (
+      <div className='weather-cards'>
+        {loading ? (
+          <p>Loading data...</p>
+        ) : (
           <>
-            <section className="weather-card">
-              <h4>Temperature</h4>
-              <p>{weatherData.temp_c ?? 'N/A'}°C</p>
-            </section>
-            <section className="weather-card">
-              <h4>Humidity</h4>
-              <p>{weatherData.humidity ?? 'N/A'}%</p>
-            </section>
-            <section className="weather-card">
-              <h4>Condition</h4>
-              <p>{weatherData.condition?.text ?? 'N/A'}</p>
-            </section>
-            <section className="weather-card">
-              <h4>Wind Speed</h4>
-              <p>{weatherData.wind_kph ?? 'N/A'} kph</p>
-            </section>
+            {error && <p className="error">{error}</p>}
+            {Object.keys(weatherData).length > 0 && !error && (
+              <>
+                <section className='weather-card'>
+                  <h4>Temperature</h4>
+                  <p>{weatherData.temp_c}°C</p>
+                </section>
+                <section className='weather-card'>
+                  <h4>Humidity</h4>
+                  <p>{weatherData.humidity}%</p>
+                </section>
+                <section className='weather-card'>
+                  <h4>Condition</h4>
+                  <p>{weatherData.condition?.text}</p>
+                </section>
+                <section className='weather-card'>
+                  <h4>Wind Speed</h4>
+                  <p>{weatherData.wind_kph} kph</p>
+                </section>
+              </>
+            )}
           </>
         )}
       </div>
