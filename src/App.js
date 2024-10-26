@@ -18,7 +18,7 @@ function App() {
     try {
       const response = await axios.get(`https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${cityName.toLowerCase()}`);
       setWeatherData(response.data.current);
-      setCityName(''); // Reset city name input after fetching data
+      // setCityName(''); // Reset city name input after fetching data
     } catch (err) {
       setError('Failed to fetch weather data. Please try again.');
     }

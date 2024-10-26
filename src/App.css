@@ -5,6 +5,11 @@ body {
 .App {
   text-align: center;
   margin: 2rem;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 .form {
@@ -32,7 +37,8 @@ body {
   justify-content: center;
   align-items: center;
   gap: 1rem;
-  height: 500px;
+  margin: 1rem;
+  /* height: 500px; */
 }
 
 .weather-card>* {
